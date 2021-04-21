@@ -2,7 +2,7 @@ import javax.sound.midi.Sequence;
 
 public class main {
     public static String SequenceDP(String word){
-        String[] Memory = new String[word.length()+2];
+        String[] Memory = new String[word.length()+1];
         StringBuilder temp;
         int last;
         for (int i=word.length()-1; i>=0;i-- ){
@@ -24,16 +24,17 @@ public class main {
                 Memory[word.length()] = Memory[i];
             }else{
                 String tempSecond="";
-                for (int j=0; j<Memory[word.length()].length();j++){
-                    System.out.println("E: "+ word.charAt(i)  +"  F: "+Memory[word.length()].charAt(j));
-                    if(word.charAt(i)<Memory[word.length()].charAt(j)){
-                        tempSecond=word.charAt(i)+Memory[word.length()].substring(j);
+                int secondcheck = 0;
+                while (secondcheck<Memory[word.length()].length() && secondcheck<2){
+                    if(word.charAt(i)<Memory[word.length()].charAt(0)){
+                        tempSecond=word.charAt(i)+Memory[word.length()].substring(secondcheck);
+                        if(Memory[word.length()].length()<=tempSecond.length()){
+                            Memory[word.length()] = tempSecond;
+                            Memory[i]=""+tempSecond;
+                        }
                         break;
                     }
-                }
-                System.out.println("-------------B: "+ tempSecond +"  A: "+Memory[word.length()]);
-                if(Memory[word.length()].length()<=tempSecond.length()){
-                    Memory[word.length()] = tempSecond;
+                    secondcheck++;
                 }
             }
         }
@@ -128,6 +129,6 @@ public class main {
 
     public static void main(String[] args) {
         //System.out.println(DivideConquer("abcyzdef", 0, 0));
-        System.out.println(SequenceDP("abcyzdef"));
+        System.out.println(SequenceDP("abcxyzpqdefg"));
     }
 }
